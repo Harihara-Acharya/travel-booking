@@ -1,0 +1,76 @@
+<% layout("/layout/boilerplate") -%>
+<body>
+
+      <div class="row mt-5">
+            <h3 class=" offset-2"><b><%= data.title %></b></h3>
+            <div class="col-8 offset-2 mt-2">
+                  <div class="card listing-card" >
+                        <img src="<%= data.image %>" class="card-img-top show-img" alt="something went wrong">
+                        <div class="card-body">
+                          <h5 class="card-title"></h5> 
+                          <p class="card-text"><%= data.description %>
+                              <br>In <%= data.location %>,<%= data.country %> <br>
+                              At &#x20B9 <%= data.price.toLocaleString("en-IN") %>/Night
+                        
+                          </p>
+                         
+                        </div>
+                  </div>
+                  <div class="show-bts">
+                        <button class="btn btn-dark "><a href="/listing/<%= data._id %>/edit" class="show-edit-a-tag"> Edit </a></button>
+
+                        <form action="/listing/<%=data._id%>?_method=DELETE" method="post" class="offset-1">
+                              <button class="btn btn-danger ">Delete post</button>
+                        </form>
+
+                  </div>
+                  <hr>
+                  <div>
+                        <p><b>All Reviews</b></p>
+                        <div class="row">
+                              <%  for(let i of data.reviews) { %>
+                                    <div class="card col-5 ms-3 mb-3">
+                                          
+                                          <div class="card-body">
+                                                <h5 class="card-title">Jane Doe</h5>
+                                                <p class="card-text"><%= i.comment %></p>
+                                                <p class="card-text"><%= i.rating %></p>
+                                          </div>
+                                          <form action="/listing/<%= data._id %>/reviews/<%= i._id %>?_method=DELETE" class="mb-3" method="post">
+                                                <button class="btn btn-sm btn-dark">Delete review</button>
+                                          </form>
+                                          
+                                    </div>
+
+            
+                              <% } %>
+                        </div>
+
+
+                  </div>
+                  <hr>
+
+                  <div class=" col-8  mb-3" >
+                        <h4>Leave a Review</h4>
+                        <form action="/listing/<%=data._id %>/reviews" method="post" novalidate class="needs-validation">
+                              <div class="mt-3 mb-3">
+                                    <label class="form-label" for="rating">Rating</label>
+                                    <input type="range" min="1" max="5" id="rating" name="review[rating]">
+                              </div>
+                              <div class="mt-3 mb-3">
+                                    <label class="form-label" for="comment">Comments</label>
+                                    <textarea class="form-control" name="review[comment]" id="comment" cols="30" rows="5" required></textarea>
+                                    <div class="invalid-feedback">Please add some comment</div>
+                              </div>
+                              <button class="btn btn-outline-dark">Submit</button>
+                        </form>
+
+                  </div>
+
+
+            </div>
+      </div>
+
+
+
+</body>
